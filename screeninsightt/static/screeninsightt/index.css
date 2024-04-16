@@ -1,0 +1,461 @@
+.moviePage .indexdiv{
+    color:white;
+    height:100%;
+    position: relative;
+    width:100%;
+    overflow-x: hidden;  
+}
+
+
+
+.moviePage .indexdiv .movies-container{
+    display: flex;
+    overflow-x:auto;
+    width:max-content;
+    flex-shrink: 0;
+    
+    
+}
+
+.moviePage .indexdiv .movies-container ::-webkit-scrollbar{
+    width:0;
+}
+
+
+
+.moviePage .indexdiv .img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    position: relative;
+}
+
+.moviePage .indexdiv .shading-div{
+    position: relative;
+    display: inline-block;
+    width: 200vh;
+    height: 100vh;
+    overflow-y: hidden;
+    z-index: 2;
+    
+}
+
+
+
+.moviePage .indexdiv .shading-div:nth-child(1){
+    display:block;
+    
+}
+
+.moviePage .indexdiv .shading-div::before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.9) 100%);
+    z-index: 3;
+}
+
+.moviePage .indexdiv .shading-div::after{
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.6) 100%); 
+}
+
+
+.moviePage .indexdiv .movie-info{
+    z-index: 100 ;
+    position:inherit;
+    background-color: transparent;
+    margin-top: -25%;
+    margin-bottom:10% ;
+    padding-left: -20%; /*later gets changed by js*/
+    opacity: 0; /*later gets changed by js*/
+    transition: padding-left  1s ease-in-out, opacity 2s ease-in-out;
+    width:50%;
+    
+}
+
+.moviePage .indexdiv .movie-title{
+    font-size: 60px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+.moviePage .indexdiv .mtd{
+    border-bottom: 2px solid;
+}
+
+.moviePage .indexdiv .num-data{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+.moviePage .indexdiv .num-data1{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.moviePage .indexdiv .num-data2{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.moviePage .indexdiv .num-data h6{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 5px;
+    position: relative;
+    top:50;
+    
+    
+}
+.moviePage .indexdiv .icon{
+    position: relative;
+    top:50;
+    width: 30px;
+    height: 30px;
+}
+
+.moviePage .indexdiv .nextbtn{
+    
+    background-color: transparent;
+    color :white;
+    width: 100px;
+    height: 30px;
+    box-shadow: none;
+    border: none;
+    border-radius: 4px;
+    padding-right: 15px;
+    outline: none;
+    transition: background-color 0.4s ease;
+}
+
+.moviePage .indexdiv .nextbtn:hover{
+    background-color: rgb(63, 62, 62);
+}
+
+.moviePage .indexdiv .nextbtn2{
+    
+    background-color: transparent;
+    color :white;
+    width: 100px;
+    height: 30px;
+    box-shadow: none;
+    border: none;
+    border-radius: 4px;
+    padding-right: 15px;
+    outline: none;
+    transition: background-color 0.4s ease;
+}
+
+.moviePage .indexdiv .nextbtn2:hover{
+    background-color: rgb(63, 62, 62);
+}
+
+.moviePage .indexdiv2 #experi{
+    color: white;
+}
+
+/*---------------------------------------------------index div 2*/
+
+.moviePage .indexdiv2 {
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.moviePage .indexdiv2 .left-sect {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgb(32, 31, 31);
+}
+
+.moviePage .indexdiv2 .flowParent{
+    display: flex;
+    flex-direction: row;
+    min-height: fit-content;
+    overflow-y: visible;
+    
+    
+}
+
+.moviePage .indexdiv2 .flow-into{
+    width: 100%;
+    flex-direction: row;
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: fit-content;
+    
+}
+
+
+
+
+
+.moviePage .indexdiv2 .right-sect {
+    width: 30%;
+    display: flex;
+    
+}
+
+
+.moviePage .indexdiv2 .container{
+    margin: 30px;
+    margin-bottom: 10px;
+    display: inline-block;
+    justify-content: center;
+    width: fit-content;
+}
+
+.moviePage .indexdiv2 .smallposter{
+    width: 200px;
+    height: 265px;
+    border-radius: 4px;
+    display: block;
+}
+
+.moviePage .indexdiv2 .containerC{
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    scrollbar-color: transparent transparent;
+    scale: 1;
+    transition: scale 0.3s ease;
+       
+}
+
+.moviePage .indexdiv2 .containerC:hover{
+    scale: 1.05;
+    z-index: 20;
+    
+       
+}
+
+
+
+
+
+
+
+.moviePage .text{
+    color: white;
+    margin-top: 3px;
+    font-size: 14px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+
+.moviePage .indexdiv2 .subcategory{
+    margin-left: 50px;
+    margin-top: 50px;
+    color: white;
+    font-size: 25px;
+}
+
+
+
+
+.moviePage .indexdiv2 .text2{
+    color: white;
+    font-size: 25px;
+    position: relative;
+    bottom: 0;
+    
+}
+
+
+.moviePage .indexdiv2 .nextbtn3{
+    
+    background-color: transparent;
+    color :white;
+    height: 100px;
+    width: 30px;
+    box-shadow: none;
+    border: none;
+    border-radius: 4px;
+    padding-right: 15px;
+    outline: none;
+    transition: background-color 0.4s ease;
+    margin-left: 30px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.moviePage .indexdiv2 .nextbtn3:hover{
+    background-color: rgb(63, 62, 62);
+}
+
+.moviePage .indexdiv2 .previousbtn3{
+    
+    background-color: transparent;
+    color :white;
+    height: 100px;
+    width: 30px;
+    box-shadow: none;
+    border: none;
+    border-radius: 4px;
+    padding-right: 15px;
+    outline: none;
+    transition: background-color 0.4s ease;
+    margin-left: 30px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.moviePage .indexdiv2 .previousbtn3:hover{
+    background-color: rgb(63, 62, 62);
+}
+
+/*right-sect---------------------------------------------------------------------------------------*/
+
+.moviePage .right-sect *{
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+}
+
+.moviePage .right-sect {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.moviePage .indexdiv2 #top10{
+    pointer-events: none;
+    text-decoration: none;
+    margin-left: 25px;
+}
+
+
+
+.moviePage .indexdiv2 .flow-into2{
+    margin-top: 30px;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    padding-left: 25px;
+    
+
+}
+
+.moviePage .indexdiv2 .container2{
+    width: 400px;
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 7px;
+    /*overflow-x: hidden;
+    overflow-y: visible;*/
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    scale: 1;
+    transition: transform 0.3s ease; /* Apply transition to .container2 */
+    z-index: 10;
+}
+
+.moviePage .indexdiv2 .container2:hover {
+    transform: scale(1.5); /* Scale the entire container on hover */
+    z-index: 100;
+}
+
+
+
+.moviePage .indexdiv2 .number-icon{
+    margin-right: -20px;
+    height: 50px;
+    width: 50px;
+    z-index: 5;
+    position: relative;
+}
+
+.moviePage .indexdiv2 .img-1{
+    height: 149px;
+    position: relative;
+    z-index: 2;
+    scale: 1;
+    transition: scale 0.3s ease;
+}
+
+.moviePage .indexdiv2 .img-1:hover{
+    scale: 2.5;
+    z-index: 100;
+}
+
+
+.moviePage .indexdiv2 .info2{
+    display: flex;
+    flex-direction:column;
+    width: 100%;
+    background: linear-gradient(to left, rgba(26, 25, 25, 0), rgba(26, 25, 25, 1));
+    
+}
+
+
+
+.moviePage .indexdiv2 .year-rating{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    justify-items: center;
+    width: 100%;
+    height: 30%;
+    border-bottom: 2px solid lightgray;
+}
+
+.moviePage .indexdiv2 .yrtext{
+    font-size: 15px;
+    color: lightgray;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.moviePage .indexdiv2 .movietitle2{
+    overflow-x: hidden;
+    width: 100%;
+    height: 50%;
+    justify-items: center;
+    margin-left: 10px;
+    padding-top: 20px;
+    text-align: center;
+    
+}
+
+.moviePage .indexdiv2 .movietitlespan{
+    color: white;
+    font-size: 16px;
+    
+    text-align: center;
+}
+
+
+
+.moviePage #bottomdiv {
+    margin-bottom: 20px;
+}
+
+
+

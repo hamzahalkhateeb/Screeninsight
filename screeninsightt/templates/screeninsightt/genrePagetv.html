@@ -1,0 +1,134 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Genre{% endblock %}</title>
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'screeninsightt/genrePagetv.css' %}" rel="stylesheet">
+        
+        
+        
+        
+
+    </head>
+    <body>
+        
+        <div id="nav-cred">
+            <div id="nav">
+                <h1 id="title-logo">ScreenInsight</h1>
+                <div class="nav-div-h">
+                    <a class="nav-link2" href="{% url 'index' %}">Movies</a>
+                </div>
+                <div class="nav-div-h">
+                    <a class="nav-link2" href="{% url 'tvshows' %}">TV Shows</a>
+                </div>
+            </div>
+
+            
+
+            <div id="cred">
+                    {% if user.is_authenticated %}               
+                            <strong class="username">{{user.username}}</strong>                        
+                    {% else %}
+                        Not signed in.
+                    {% endif %}
+                    {% if user.is_authenticated %}                           
+                                <a class="nav-link" id="logout" href="{% url 'logout' %}">Log Out</a>                           
+                    {% else %}                           
+                                <a class="nav-link" id="login" href="{% url 'login' %}">Log In</a>                           
+                                <a class="nav-link" href="{% url 'register' %}">Register</a>                            
+                    {% endif %}               
+            </div>           
+        </div>        
+        <div class="main-body">
+            <div class="child-body">
+                <div class="title-div">
+                    <span class="title-divC">{{genrename}}</span>
+                </div>
+
+
+
+                <div class="search-div">
+                    <form method="get" action="{% url 'filtertv' %}" class="searchform">
+                        <input placeholder="Key words" class="searchbarg" name="name">
+                        <select class="filterselect" name="genre">
+                                <option class="option" value="">None</option>
+                            {% for option in genres%}
+                                <option class="option" value="{{option.id}}">{{option.name}}</option>
+                            {%endfor%}
+                        </select>
+                        <select class="filterselect" name="country">
+                            <option class="option" value="US">United States</option>
+                            <option class="option" value="GB">United Kingdom</option>
+                            <option class="option" value="CA">Canada</option>
+                            <option class="option" value="AU">Australia</option>
+                            <option class="option" value="IN">India</option>
+                            <option class="option" value="DE">Germany</option>
+                            <option class="option" value="FR">France</option>
+                            <option class="option" value="JP">Japan</option>
+                            <option class="option" value="KR">South Korea</option>
+                            <option class="option" value="CN">China</option>
+                            <option class="option" value="BR">Brazil</option>
+                            <option class="option" value="MX">Mexico</option>
+                        </select>
+                        <select class="filterselect" name="vote">
+                            <option class="option" value="">none</option>
+                            <option class="option" value="1">1</option>
+                            <option class="option" value="2">2</option>
+                            <option class="option" value="3">3</option>
+                            <option class="option" value="4">4</option>
+                            <option class="option" value="5">5</option>
+                            <option class="option" value="6">6</option>
+                            <option class="option" value="7">7</option>
+                            <option class="option" value="8">8</option>
+                            <option class="option" value="9">9</option>
+                        </select>
+                        <button type="submit" class="submitbutton" value="filter" name="filter">Filter </button>
+                    </form>
+                </div>
+                
+                
+                
+                <div class="moviediv">
+            
+                    <div class="flow-into">
+                        {%for movie in batch1movies%}
+                            <div class="containerC">
+                                <div class="container">
+                                    {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                                    <img class="smallposter" src={{base_url}}{{movie.poster_path}}>
+                                    {%endwith%}
+                                </div>
+                                <div class="movietitle">
+                                    <a href="{% url 'tvdetails' movie.id %}" class="text">{{movie.name}}</a>
+                                </div>
+                            </div>
+                        {%endfor%}
+                        {%for movie in batch2movies%}
+                            <div class="containerC">
+                                <div class="container">
+                                    {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                                    <img class="smallposter" src={{base_url}}{{movie.poster_path}}>
+                                    {%endwith%}
+                                </div>
+                                <div class="movietitle">
+                                    <a href="{% url 'tvdetails' movie.id %}" class="text">{{movie.name}}</a>
+                                </div>
+                            </div>
+                        {%endfor%}
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <script src="{% static 'screeninsightt/genrePagetv.js' %}"></script>
+        
+
+    </body>
+</html>

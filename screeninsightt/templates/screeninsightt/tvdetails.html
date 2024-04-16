@@ -1,0 +1,263 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Movie Details{% endblock %}</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'screeninsightt/tvdetails.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="nav-cred">
+            <div id="nav">
+                <h1 id="title-logo">ScreenInsight</h1>
+                <div class="nav-div-h">
+                    <a class="nav-link2" href="{% url 'index' %}">Movies</a>
+                </div>
+                <div class="nav-div-h">
+                    <a class="nav-link2" href="{% url 'tvshows' %}">TV Shows</a>
+                </div>
+            </div>
+            <div id="cred">
+                    {% if user.is_authenticated %}               
+                        <form id="idform" action="/profile" method="post">
+                            {% csrf_token %}
+                            <a href="#" onclick="event.preventDefault(); document.getElementById('idform').submit();" class="username">{{ user.username }}</a>
+                            <input type="hidden" name="userid" value="{{user.id}}">
+                        </form>                      
+                    {% else %}
+                        Not signed in.
+                    {% endif %}
+                    {% if user.is_authenticated %}                           
+                                <a class="nav-link" id="logout" href="{% url 'logout' %}">Log Out</a>                           
+                    {% else %}                           
+                                <a class="nav-link" id="login" href="{% url 'login' %}">Log In</a>                           
+                                <a class="nav-link" href="{% url 'register' %}">Register</a>                            
+                    {% endif %}               
+            </div>           
+        </div>
+
+        <div class="MDmain">
+            <div class="content">
+                <div class="backdropDiv">
+                    {% with base_url="https://image.tmdb.org/t/p/original/" %}
+                    <img class="img" src={{base_url}}{{datas.backdrop_path}} alt="backdrop">
+                    {% endwith %}
+                </div>
+                <div class="centered">
+                    <div class="details">
+                        <div class="poster">
+                            {% with base_url="https://image.tmdb.org/t/p/original/" %}
+                            <img class="posterp" id="is" src={{base_url}}{{datas.poster_path}} alt="backdrop">
+                            {% endwith %}
+                        </div>
+                        <div class="furtherinfo">
+                            <div class="title">
+                                <h3 id="mt">{{datas.name}}</h3>
+                            </div>
+                            <div class="buttons">
+                                <div>
+                                    <button class="tab" id="generaltab">General</button>
+                                    <button class="tab" id="casttab">Seasons</button>
+                                </div>
+                                {%if user.is_authenticated%}
+                                    <div class="btn2c">
+                                        <button class="btn2" id="atl"><i class="fas fa-heart"></i></button>
+                                        <button class="btn2" id="atw"><i class="fas fa-eye"></i></button>
+                                        <input type="hidden" id="currentuser" name="current_user" value="{{ user.id|safe }}">
+                                        <input type="hidden" id="csrf_token" value="{{ csrf_token|safe }}">
+                                        <input type="hidden" id="datasid" value="{{ datas.id }}">
+                                    </div>
+                                {%endif%}
+                            </div>
+                            <div class="textdata" id="general">
+                                <div class="synopsis">
+                                    <div class="headerD">
+                                        <span class="header">Synopsis:</span>
+                                    </div>
+                                    <p class="overview">{{datas.overview}}</p>
+                                </div>
+                                <div class="minordetails">
+                                    <div class="lefthalf">
+                                        <div class="subheader">
+                                            <div class="identifier">
+                                                <span class="identifierS">Rating:</span>
+                                            </div>
+                                            <div class="identified">
+                                                <span class="identifiedS" id="number">{{datas.vote_average}}</span>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="subheader">
+                                            <div class="identifier">
+                                                <span class="identifierS">Release Date:</span>
+                                            </div>
+                                            <div class="identified">
+                                                <span class="identifiedS">{{datas.first_air_date}}</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="subheader">
+                                            <div class="identifier">
+                                                <span class="identifierS">Genres:</span>
+                                            </div>
+                                            <div class="identified">
+                                                <span class="identifiedS">
+                                                    {% for genre in datas.genres %}
+                                                        <a href="{% url 'genrePage' genre.id %}">{{genre.name}}</a>
+                                                    {% endfor %}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="righthalf">
+                                        <div class="subheader">
+                                            <div class="identifier">
+                                                <span class="identifierS">Production Company:</span>
+                                            </div>
+                                            <div class="identified">
+                                                {% for company in datas.production_companies %}
+                                                    <div style="margin-bottom: 5px;">
+                                                        <span class="identifiedS">{{company.name}}</span>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="textdata" id="cast">
+                                <div class="castheading">
+                                    <h3 class="castheadingS">Seasons</h3>
+                                </div>
+                                <div class="flowinto">
+                                    <div class="parentCastDiv">
+                                        {%for season in datas.seasons%}
+                                            <div class="actualcastpfp">
+                                                <div class=image>
+                                                    {% with base_url="https://image.tmdb.org/t/p/original/" %}
+                                                        <img class="imgS" src={{base_url}}{{season.poster_path}} alt="pfp">
+                                                    {% endwith %}
+                                                </div>
+                                                <div class="namediv">
+                                                    <div class="name">
+                                                        <span class="nameS">{{season.name}}</span>
+                                                    </div>
+    
+                                                    <div class="charactername">
+                                                        <span class="characternameS">{{season.episode_count}} Episodes</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {%endfor%}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>Similar TV shows</h2>
+                    <ul class="accordion">
+                    {% for movie in similarMovies %}
+                    <li>
+                        {% with base_url="https://image.tmdb.org/t/p/original/" %}
+                        <img  src={{base_url}}{{movie.poster_path}} >
+                        {% endwith %}
+                        
+                        <div class="content">
+                            <span>
+                                <a href="{% url 'tvdetails' movie.id %}" class="movietitlespan">{{movie.name}}</a>
+                                
+                            </span>
+                        </div>
+                    </li>
+                    {%endfor%}
+                    </ul>
+                    {%if user.is_authenticated%}
+                    <h2>Write a Review</h2>
+                    <div class="rvuBox">
+                        <div class="inputsDiv">
+                        <form class="inputs">
+                                <input type="hidden" id="csrf_token22" value="{{ csrf_token|safe }}">
+                                <input type="text" id="rvuheading" class="headinput" placeholder="Review Headline">
+                                <input type="text" id="rvubody" class="bodyinput" placeholder="Review body">
+                                <div class="hinputs">
+                                    <input type="number" id="rating" class="ratinginput" placeholder="Rate" min="1" max="10">
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <input type="submit" id="srb" class="srb" name="submit">
+                                    
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {%endif%}
+                    <div class="parentwr">
+                        {% for review in reviews %}
+                        <div class="reviewsss">
+                            <div class="creds">
+                                <div class="creds2">
+                                    <img class="imgb" src="{% static 'screeninsightt/pfp.png' %}" alt="pfp">
+                                    <strong class="username">{{ review.user }}</strong>
+                                </div>
+                                {%if user.is_authenticated and review.user == user%}
+                                    <div class="editdiv">
+                                        <button class="editbtn" id="editbtn"><i class="fas fa-pen"></i></button>
+                                        <form>
+                                            <button class="savebtn" id="savebtn"><i class="fas fa-save"></i></button>
+                                        </form>
+                                        <input type="hidden" value="{{user}}" id="currentuserinstance">
+                                        <input type="hidden" value="{{review.id}}" id="reviewiddd">
+                                    </div>
+                                {%endif%}
+                            </div>
+                            <div class="wrapper" id="wrapper">
+                                <div class="spacer">
+                                </div>
+                                <div class="reviewcontent" id="reviewcontent_{{review.user}}">
+                                    <strong class="headline" id="headline_{{review.id}}">{{ review.headline }}</strong>
+                                    <input type="hidden" value="{{ review.rating }}" id="rvustars_{{ review.id }}">
+                                    <div class="stars" id="starsDivv_{{ review.id }}">
+                                        <script>
+                                            stars3 = parseInt(document.querySelector("#rvustars_{{ review.id }}").value);
+                                            string = "";
+                                            for (let i = 0; i < stars3; i++) {
+                                                string += "<strong><i class='fas fa-star checked'></i></strong>";
+                                            };
+                    
+                                            for (let i = 0; i < (10 - stars3); i++) {
+                                                string += "<strong><i class='fas fa-star unchecked'></i></strong>";
+                                            }
+                    
+                                            document.querySelector("#starsDivv_{{ review.id }}").innerHTML = string;
+                                        </script>
+                                    </div>
+                                    <p class="body" id="body_{{review.id}}">{{ review.text }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                
+                
+                    
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <script src="{% static 'screeninsightt/tvdetails.js' %}"></script>
+    </body>
+</html>
+    
+
+

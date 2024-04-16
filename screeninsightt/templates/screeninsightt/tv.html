@@ -1,0 +1,270 @@
+{% extends "screeninsightt/layout.html" %}
+
+
+{% block extra_head %}
+    {% load static %}
+{% endblock %}
+
+{% block body %}
+<div class="tvPage">
+    <div class="indexdiv">
+        
+        <div class="movies-container">
+        {%for movie in TrendingMovies %}
+            <div class="shading-div" id="trdm-{{movie.id}}">
+                
+                    {% with base_url="https://image.tmdb.org/t/p/original/" %}
+                    <img class="img" src={{base_url}}{{movie.backdrop_path}} alt="poster">
+                    {% endwith %}
+
+                    <div class="movie-info" >
+                        <div class="mtd">
+                            <a href="{% url 'tvdetails' movie.id %}" class="movie-title">{{movie.name|upper}}</a>
+                        </div>
+                        <div class="num-data">
+                            <div class="num-data1">
+                                {% if movie.adult == "False" %}
+                                    <img class="icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADf0lEQVR4nO2av2sUQRTH16gYI/5IQI1go5X+B3axPLm75L7fZQv15LpUIga1E1LYiEkjiIilWAk2hhA1VlYi/sDKaKKNJBbGgKLJzVxk5Y0buXh7d7nb2duL5MErchl25jPv7Zv33qzjbMh/Kr7n9RTJnAJGFTCugSlFLihAGSUXNPBW/qfIERnrp9PdTjuIXyh0KvKMAiYV8EuTfiOqgGUFPFKum5dnOS0H8LztGrioyLlGF18V6s+zLsizWwJRyuUyGvhoC6BCgQ8lIB23G12PDaAS6I6fyXTZhQAOaPJ1yyD4V1/4ntdrBWKJPCzmTgDCD3RG1hDVEvs08D5BCH/lvWnaMiYyJeNOfhV92VSI1uTtNli8X64KuNl4iG2DhesQLeVyJ9buUsm+3H4dnVmTi2nyUhss1q+pwFBta6RS2zQ5m/hCWVsV8LlmKiMJYIQJzlbdoMHBrT+Bg8p1TyrgmSWY09VBgMk4QFZBDQ93SBpvAeRh+ASe1yNpdVQQBXghk35VwBMNHDNzOc4m83c0kGV/YGBPBUgRQMRdqgpSNvlikTwi40pAKqpVikB/mFuNxg1iYMgRY5VUapcF97oWBjLeChBN3gtceXMzVaVevSljFSAWksO1WuSqjFvyvENRLaKBqUqLkPNxgyjghwCYjSMHI7sW+SXMtZQNEMmFTIqzWt9o8m4xlztq3Kq/f6eNNEiRxdhA6kkQ5p9GditWA7HkWn4+v0MqunL1+/q2BNbKKOCbDQhdzbVifdmBc4E1ehX53RaIDn3ZYwy/snNybgQv+WWLIA9afiAq4IqxSibTpclPVlwLIQei9GJjBlmUDNiMcd2CDZAima2MJul0d1xJY5mL3TJzDQ93aOBVJGuQJd/zdoeGRkU+jhUEWF45S0quezwiyEQoRGDyfJwggd4v27ixCCCn1n+pS87VbUBIaz/phep6CpyvCbEu2kHA9Jo7jnI/kfiCGa5SWTqNiITKpBet/1FF3mgIwrhYodAp9xNtBPFcglHDIAbG8/Zq8l1btEmz2f1O5IseciZJiKWgqowskn7L/UQi7pSNaIkKmFRqW8svQ70Yr6pNTR6nqwHTDYfYZsVENGDIcjozKyd2Ml9AiLu5bl4ays2UAOYTDnJCOutNh1bbIg1l6cVK1WayWvmAhpwv+6hmXn6T8lTGSFFUtZ7YEGf9y2+cv674sy46MQAAAABJRU5ErkJggg==">
+                                
+                                {% else %}
+                                    <img class="icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAENElEQVR4nO1aT2wVZRBfjBE1wHvfbFtASRTCgYsnb544kIh/0QMHAeMfvHmBABcva2Rnti1IUjVqLCTGYy/WUnbmUZMeTDwQjQkXUQonICQQCHLwD8U1s9vXluzu67799r1XDJPM5b3db77fzm/mm5ldx3kg/1NZIx64gq8B01EQPGWEzoHgDRD6O1G8YZh+1f+A8YheW5sMjLMc5Klp71GX6U0jOAVCd0Eoak9x1jA26iHu0bWcbsuGsY8fM0IHjdCV9jefrbqWETyga3cFRF3oZWC6WBWAlDJeMOy/1DEA6nojONIxACkP4TfrJ7zHKwXRx/56YPqlWyCgCYbxp/7J4XWVgKhNBZvU3d0GAQs6o3uwArG2cWTAMP3eQxBRM25Ke0azRy/oBLkxQz+XStHA9FWvNw8pz9Dn7afYXm9acjzT8F9og1I9De5oCZ0pRDHD/qFlsNmopTZwf4FDr5qywwj+YQS/M0yfAOMgCH4Bgj8C0x3rtRkvt/SKFoD2Ruiq4eA9JxxZmWnj9NAThumYLaC60O58WiVVrAUQPLs439c4eBo42AkNesvlYCuE3prmf8DBNsN028Ke5PYTWlbbeEIP0GZJYwTHgfHfe65jugmMHzhRtCKJR3rD4qHN1qa9egoIhMHrVt7gYGfzgRjB35a4fnjeruAPZW26TK+mgcSdXWkgM47nPZTQk44XuP6uK7glAULvWNgdTgPRFrQsrYRQ11gVYv9ca1uEGmdBcMwqLhlPpgPdojhsnrZGcJcVPaXtB3gug1p4veyC/UKb52gy1E0gIHgtg1pFKZFWDfBW8aGHY1z2ZKpN24x/dQQICI7mGBx1WtV2lQLhzlHLMH3b1wieXazNeyyBXKs22Nl/XtfQsqHwPYLjes/qKXKrDXahyfIL4ke6xsD3uBYY/ykGno7FD/DU4DOVpl+wOBD1JF8oO/DrYvccfk6vdxnfr/RAdHVuW37ByOVgh66zauJon570rb2BJ2KjUbRCRz5lbdYb/ispIDpQtioahS7NZ6+T/pPq9gw63TaMHzrT3sMJnf13y9OK7pipwVpmKtSBsu2ko1kB31PGh7jXCG13x4dWz9sK6UXD9Gd5IMiZIOKsE+IeGyBzYK4A+287Y94jWTbUW4bx03LTe1pkB3d1qdWlW5pi43lx0uqOGsEzNvSFRTTO60AX6CV4oAogHdZ9zv0+DjKM5wtPHPX9RK83DPm02u60IyD05TIE8ZnTrsSBb3FYVQ8CzywZ4HmirWuBQUI3dEbrOMf6Rc8SJUenQdQahzc6VYgO3fTU7gWdBmw9kZJwZGW3X4Zu6OSrap2YdJJqhvF82ym2rGhG09G+TsUrBKBr7evJFxBKt7lCU8rVUDirVWw8WS+bWqsWHSjrLFa7Nu1F4g9okoFG8lEN4/XkN5rQa7Qpyu0nHohz/8t/rCS0VVlcoeYAAAAASUVORK5CYII=">
+                                
+                                {% endif %}
+                                <h6 class="num-det"><i class="fas fa-star"></i>{{movie.vote_average}}</h6>
+                                <h6 class="num-det" ><i class="fas fa-clock"></i>{{movie.first_air_date}}</h6>
+                            </div>
+                            <div class="num-data2">
+                                {% for genre in movie.genres%}
+                                    <h6> {{genre}}</h6>
+                                {%endfor%}
+                            </div>
+                        </div>
+                        <div class="movie_overview">
+                            <p>{{movie.overview}}</p>
+                        </div>
+                        <div>
+                            <button class="nextbtn2" ><i class="fas fa-arrow-left"></i></button>
+                            <button class="nextbtn" ><i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                
+            </div>
+        {%endfor%}
+        </div>
+    </div>
+    <div class="indexdiv2">
+        <div class="left-sect">
+        
+            <a href="{% url 'genrePagetv' 10759 %}" class="subcategory">ACTION</a>
+            <div div class="flowParent">
+
+                <div class="flow-into">
+                    {%for movie in actionMovies%}
+                        <div class="containerC">
+                            <div class="container">
+                                {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                                <img class="smallposter" src={{base_url}}{{movie.poster_path}}>
+                                {%endwith%}
+                            </div>
+                            <a href="{% url 'tvdetails' movie.id %}" class="text">{{movie.name}}</a>
+                            
+                        </div>
+                    {%endfor%}
+                </div>
+                
+                <div class="buttonsDiv">
+                    <button class="nextbtn3" id="nextbtn4"><i class="fas fa-arrow-right"></i></button>
+                    <button class="previousbtn3" id="previousbtn4"><i class="fas fa-arrow-left"></i></button>
+                </div>
+
+            </div>
+
+            <a href="{% url 'genrePagetv' 35 %}" class="subcategory">COMEDY</a>
+            <div div class="flowParent">
+
+                <div class="flow-into">
+                    {%for movie in comedyMovies%}
+                        <div class="containerC">
+                            <div class="container">
+                                {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                                <img class="smallposter" src={{base_url}}{{movie.poster_path}}>
+                                {%endwith%}
+                            </div>
+                            <a href="{% url 'tvdetails' movie.id %}" class="text">{{movie.name}}</a>
+                            
+                        </div>
+                    {%endfor%}
+                </div>
+                
+                <div class="buttonsDiv">
+                    <button class="nextbtn3" id="nextbtn5"><i class="fas fa-arrow-right"></i></button>
+                    <button class="previousbtn3" id="previousbtn5"><i class="fas fa-arrow-left"></i></button>
+                </div>
+
+            </div>
+
+            <a href="{% url 'genrePagetv' 18 %}" class="subcategory">DRAMA</a>
+            <div div class="flowParent">
+
+                <div class="flow-into">
+                    {%for movie in dramaMovies%}
+                        <div class="containerC">
+                            <div class="container">
+                                {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                                <img class="smallposter" src={{base_url}}{{movie.poster_path}}>
+                                {%endwith%}
+                            </div>
+                            <a href="{% url 'tvdetails' movie.id %}" class="text">{{movie.name}}</a>
+                            
+                        </div>
+                    {%endfor%}
+                </div>
+                
+                <div class="buttonsDiv">
+                    <button class="nextbtn3" id="nextbtn6"><i class="fas fa-arrow-right"></i></button>
+                    <button class="previousbtn3" id="previousbtn6"><i class="fas fa-arrow-left"></i></button>
+                </div>
+
+            </div>
+
+            <a href="{% url 'genrePagetv' 10765 %}" class="subcategory">FANTASY & SCI-FI</a>
+            <div div class="flowParent">
+
+                <div class="flow-into">
+                    {%for movie in fantasyMovies%}
+                        <div class="containerC">
+                            <div class="container">
+                                {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                                <img class="smallposter" src={{base_url}}{{movie.poster_path}}>
+                                {%endwith%}
+                            </div>
+                            <a href="{% url 'tvdetails' movie.id %}" class="text">{{movie.name}}</a>
+                            
+                        </div>
+                    {%endfor%}
+                </div>
+                
+                <div class="buttonsDiv">
+                    <button class="nextbtn3" id="nextbtn7"><i class="fas fa-arrow-right"></i></button>
+                    <button class="previousbtn3" id="previousbtn7"><i class="fas fa-arrow-left"></i></button>
+                </div>
+
+            </div>
+
+            <a href="{% url 'genrePagetv' 16 %}" class="subcategory">ANIMATION</a>
+            <div div class="flowParent">
+
+                <div class="flow-into">
+                    {%for movie in horrorMovies%}
+                        <div class="containerC">
+                            <div class="container">
+                                {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                                <img class="smallposter" src={{base_url}}{{movie.poster_path}}>
+                                {%endwith%}
+                            </div>
+                            <a href="{% url 'tvdetails' movie.id %}" class="text">{{movie.name}}</a>
+                            
+                        </div>
+                    {%endfor%}
+                </div>
+                
+                <div class="buttonsDiv">
+                    <button class="nextbtn3" id="nextbtn8"><i class="fas fa-arrow-right"></i></button>
+                    <button class="previousbtn3" id="previousbtn8"><i class="fas fa-arrow-left"></i></button>
+                </div>
+
+            </div>
+
+            <a href="{% url 'genrePagetv' 9648 %}" class="subcategory">Mystery</a>
+            <div id="bottomdiv" class="flowParent">
+
+                <div class="flow-into">
+                    {%for movie in romanceMovies%}
+                        <div class="containerC">
+                            <div class="container">
+                                {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                                <img class="smallposter" src={{base_url}}{{movie.poster_path}}>
+                                {%endwith%}
+                            </div>
+                            <a href="{% url 'tvdetails' movie.id %}" class="text">{{movie.name}}</a>
+                        </div>
+                    {%endfor%}
+                </div>
+                
+                <div class="buttonsDiv">
+                    <button class="nextbtn3" id="nextbtn9"><i class="fas fa-arrow-right"></i></button>
+                    <button class="previousbtn3" id="previousbtn9"><i class="fas fa-arrow-left"></i></button>
+                </div>
+
+            </div>
+                
+        </div>
+
+
+        <div class="right-sect">
+
+            {%if user.is_authenticated%}
+                <a href="genre" class="subcategory" id="top10">RECOMMENDED FOR YOU</a>
+                
+                <div class="flow-into2">
+                    {%for movie in recommended%}
+                    <div class="container2">
+                        
+                        {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                            <img class="img-1" src={{base_url}}{{movie.poster_path}}>
+                        {%endwith%}
+                        <div class="info2">
+                            <div class="year-rating">
+                                <span class="yrtext">{{movie.first_air_date}}</span>
+                                <span class="yrtext">{{movie.vote_average}}</span>
+                            </div>
+                            <div class="movietitle2">
+                                <a href="{% url 'tvdetails' movie.id %}" class="movietitlespan">{{movie.name}}</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+            {%endif%}
+
+
+            <a href="genre" class="subcategory" id="top10">TOP 10</a>
+            
+            <div class="flow-into2">
+                {%for movie in topRated%}
+                <div class="container2">
+                    
+                    {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                        <img class="img-1" src={{base_url}}{{movie.poster_path}}>
+                    {%endwith%}
+                    <div class="info2">
+                        <div class="year-rating">
+                            <span class="yrtext">{{movie.first_air_date}}</span>
+                            <span class="yrtext">{{movie.vote_average}}</span>
+                        </div>
+                        <div class="movietitle2">
+                            <a href="{% url 'tvdetails' movie.id %}" class="movietitlespan">{{movie.name}}</a>
+                            
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+            
+    </div>
+</div>
+
+<script src="static/screeninsightt/tv.js"></script>
+{% endblock %}

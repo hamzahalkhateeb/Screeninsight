@@ -1,0 +1,26 @@
+body{
+    background-color: rgb(36, 35, 35);
+    font-family: 'Open Sans', serif;
+    letter-spacing: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    flex-direction: column;
+}
+
+.form-control{
+    width:600px;
+    height: 30px;
+    margin: 20px;
+    background-color: rgb(45, 45, 45);
+    box-shadow: none;
+}
+
+.btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+

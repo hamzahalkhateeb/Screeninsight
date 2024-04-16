@@ -1,0 +1,106 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}ScreenInsight{% endblock %}</title>
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'screeninsightt/layout.css' %}" rel="stylesheet">
+        <link href="{% static 'screeninsightt/index.css' %}" rel="stylesheet">
+        <link href="{% static 'screeninsightt/tv.css' %}" rel="stylesheet">
+        
+        
+        
+
+    </head>
+    <body>
+        
+        
+        <div id="nav-cred">
+            <div id="nav">
+                <h1 id="title-logo">ScreenInsight</h1>
+                
+                <ul class="nav">
+                    <li class="nav-item"> 
+                            <div class="nav-div-h">
+                                <div class="dropdown">
+                                    <span class="nav-link2">Genre</span>
+                                    <div class="dropdown-content">
+                                        <button class="nav-link3" id="actionbtn">Action</button>
+                                        <button class="nav-link3" id="comedybtn">Comedy</button>
+                                        <button class="nav-link3" id="dramabtn">Drama</button>
+                                        <button class="nav-link3" id="fantasybtn">Fantasy</button>
+                                        <button class="nav-link3" id="horrorbtn">Horror</button>
+                                        <button class="nav-link3" id="romancebtn">Romance</button>
+                                    </div>
+                                </div>
+                            </div>
+                    </li>
+                </ul>
+                <div class="nav-div-h">
+                <a class="nav-link2" href="{% url 'index' %}">Movies</a>
+                </div>
+                <div class="nav-div-h">
+                <a class="nav-link2" href="{% url 'tvshows' %}">TV Shows</a>
+                </div>
+                
+
+
+
+            </div>
+
+            <div id="search">
+                {% if "tv" in request.path%}
+                    <form method="get" action="{% url 'basicsearchtv' %}">
+                        <input type="text" class="searchbar" name="name"  placeholder="Search movies..">
+                        <button class="searchbtn"><i class="fas fa-search"></i></button>
+                    </form>
+                {%else%}
+                    <form method="get" action="{% url 'basicsearch' %}">
+                        <input type="text" class="searchbar" name="name"  placeholder="Search movies..">
+                        <button class="searchbtn"><i class="fas fa-search"></i></button>
+                    </form>
+                {%endif%}
+            </div>
+
+
+            <div id="cred">
+                {% if user.is_authenticated %}
+                    <form id="idform" action="profile" method="post">
+                        {% csrf_token %}
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('idform').submit();" class="username">{{ user.username }}</a>
+                        <input type="hidden" name="userid" value="{{user.id}}">
+                    </form>
+                    
+                {% else %}
+                    Not signed in.
+                {% endif %}
+                {% if user.is_authenticated %}
+                        
+                            <a class="nav-link" id="logout" href="{% url 'logout' %}">Log Out</a>
+                        
+                {% else %}
+                        
+                            <a class="nav-link" id="login" href="{% url 'login' %}">Log In</a>
+                        
+                        
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        
+                {% endif %}
+            </div>
+            
+            
+        </div>
+       
+        
+        {% block body %}
+        
+
+        {% endblock %}
+        <script src="static/screeninsightt/layout.js"></script>
+    </body>
+</html>

@@ -1,0 +1,260 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}ScreenInsight{% endblock %}</title>
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'screeninsightt/profile.css' %}" rel="stylesheet">
+        
+        
+        
+        
+
+    </head>
+    <body>
+        <div id="nav-cred">
+            <div id="nav">
+                <h1 id="title-logo">ScreenInsight</h1>
+                
+               
+                <div class="nav-div-h">
+                <a class="nav-link2" href="{% url 'index' %}">Movies</a>
+                </div>
+                <div class="nav-div-h">
+                <a class="nav-link2" href="{% url 'tvshows' %}">TV Shows</a>
+                </div>
+                
+
+
+
+            </div>
+
+            <div id="search">
+                {% if "tv" in request.path%}
+                    <form method="get" action="{% url 'basicsearchtv' %}">
+                        <input type="text" class="searchbar" name="name"  placeholder="Search movies..">
+                        <button class="searchbtn"><i class="fas fa-search"></i></button>
+                    </form>
+                {%else%}
+                    <form method="get" action="{% url 'basicsearch' %}">
+                        <input type="text" class="searchbar" name="name"  placeholder="Search movies..">
+                        <button class="searchbtn"><i class="fas fa-search"></i></button>
+                    </form>
+                {%endif%}
+            </div>
+
+
+            <div id="cred">
+                
+                        <strong class="username">{{ user.username }}</strong>
+                        
+                    
+                
+                {% if user.is_authenticated %}
+                        
+                            <a class="nav-link" id="logout" href="{% url 'logout' %}">Log Out</a>
+                        
+                {% else %}
+                        
+                            <a class="nav-link" id="login" href="{% url 'login' %}">Log In</a>
+                        
+                        
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        
+                {% endif %}
+            </div>
+            
+            
+        </div>
+        <div class="body">
+            <div class="body2">
+                <div class="headers">
+                    <div class="image">
+                        <img class="imgS" src="static/screeninsightt/pfp.png" alt="pfp">
+                    </div>
+                    <div class="usernamediv">
+                        <strong class="usernamefield">{{ user.username }}</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="body3">
+                <div class="flow-into2">
+                    
+                    <h3 id="likedtitless" style="margin-top: 20px; margin-bottom: 20px;">Liked Movies <i class="fas fa-heart heart"></i></h3>
+                    
+                    {%for movie in Likedmovies%}
+                    <div class="container2" id="container3_{{movie.movieid}}">
+                        
+                        {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                            <img class="img-1" src={{base_url}}{{movie.poster_path}}>
+                        {%endwith%}
+                        <div class="info2">
+                            <div class="year-rating">
+                                <button class="likesymbol" id="liked_{{movie.movieid}}"><i class="fas fa-heart"></i></button>
+                                <input type="hidden" value="{{user.id}}" id="username2_{{movie.movieid}}">
+                                <input type="hidden" id="csrf_token2" value="{{ csrf_token|safe }}">
+                            </div>
+                            <div class="movietitle2">
+                                <a href="{% url 'movieDetails' movie.movieid %}" class="movietitlespan">{{movie.movie_title}}</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                    {%for movie in likedtv%}
+                    <div class="container99" id="container3_{{movie.movieid}}">
+                        
+                        {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                            <img class="img-1" src={{base_url}}{{movie.poster_path}}>
+                        {%endwith%}
+                        <div class="info2">
+                            <div class="year-rating">
+                                <button class="likesymbol" id="likedtv_{{movie.movieid}}"><i class="fas fa-heart"></i></button>
+                                <input type="hidden" value="{{user.id}}" id="username2_{{movie.movieid}}">
+                                <input type="hidden" id="csrf_token2" value="{{ csrf_token|safe }}">
+                            </div>
+                            <div class="movietitle2">
+                                <a href="{% url 'tvdetails' movie.movieid %}" class="movietitlespan">{{movie.movie_title}}</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+<!------------------------------------------------------------------------------->
+                <div class="parentwr">
+                    <div class="btns">
+                        <button class="navigate" id="movies">Movies</button>
+                        <button class="navigate" id="tvshows">TV Shows</button>
+                    </div>
+                        <h3 style="margin-top: 20px; margin-bottom: 20px;">Reviews <i class="fas fa-file-alt"></i></h3>
+                    
+                    {% for review in reviews %}
+                    <div class="reviewsss" >
+                        <div class="creds">
+                            <img class="imgb" src="{% static 'screeninsightt/pfp.png' %}" alt="pfp">
+                            <strong class="usernamez">{{ review.user }}</strong>
+                        </div>
+                        <div class="wrapper">
+                            <div class="spacer">
+                                <img class="imgp" src={{review.poster_path}} alt="poster">
+                            </div>
+                            <div class="reviewcontent">
+                                <strong class="headline">{{ review.headline }}</strong>
+                                <input type="hidden" value="{{ review.rating }}" id="rvustars_{{ review.id }}">
+                                <div class="stars" id="starsDivv_{{ review.id }}">
+                                    <script>
+                                        stars3 = parseInt(document.querySelector("#rvustars_{{ review.id }}").value);
+                                        string = "";
+                                        for (let i = 0; i < stars3; i++) {
+                                            string += "<strong><i class='fas fa-star checked'></i></strong>";
+                                        };
+                
+                                        for (let i = 0; i < (10 - stars3); i++) {
+                                            string += "<strong><i class='fas fa-star unchecked'></i></strong>";
+                                        }
+                
+                                        document.querySelector("#starsDivv_{{ review.id }}").innerHTML = string;
+                                    </script>
+                                </div>
+                                <p class="bodyz">{{ review.text }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% for review in reviewstv %}
+                    <div class="reviewstv" >
+                        <div class="creds">
+                            <img class="imgb" src="{% static 'screeninsightt/pfp.png' %}" alt="pfp">
+                            <strong class="usernamez">{{ review.user }}</strong>
+                        </div>
+                        <div class="wrapper">
+                            <div class="spacer">
+                                <img class="imgp" src={{review.poster_path}} alt="poster">
+                            </div>
+                            <div class="reviewcontent">
+                                <strong class="headline">{{ review.headline }}</strong>
+                                <input type="hidden" value="{{ review.rating }}" id="rvustars_{{ review.id }}">
+                                <div class="stars" id="starsDivv_{{ review.id }}">
+                                    <script>
+                                        stars3 = parseInt(document.querySelector("#rvustars_{{ review.id }}").value);
+                                        string = "";
+                                        for (let i = 0; i < stars3; i++) {
+                                            string += "<strong><i class='fas fa-star checked'></i></strong>";
+                                        };
+                
+                                        for (let i = 0; i < (10 - stars3); i++) {
+                                            string += "<strong><i class='fas fa-star unchecked'></i></strong>";
+                                        }
+                
+                                        document.querySelector("#starsDivv_{{ review.id }}").innerHTML = string;
+                                    </script>
+                                </div>
+                                <p class="bodyz">{{ review.text }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+<!------------------------------------------------------------------------------->
+                <div class="flow-into2">
+                    <h3 id="watchedtitless"style="margin-top: 20px; margin-bottom: 20px;">Watchlisted Movies <i class="fas fa-eye eye"></i></h3>
+                    {%for movie in WatchlistMovies%}
+                    <div class="container2" id="container2_{{movie.movieid}}">
+                        
+                        {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                            <img class="img-1" src={{base_url}}{{movie.poster_path}}>
+                        {%endwith%}
+                        <div class="info2">
+                            <div class="year-rating">
+                                <button class="watchsymbol" id="watched_{{movie.movieid}}"><i class="fas fa-eye"></i></button>
+                                <input type="hidden" value="{{user.id}}" id="username_{{movie.movieid}}">
+                                <input type="hidden" id="csrf_token" value="{{ csrf_token|safe }}">
+                                
+                            </div>
+                            <div class="movietitle2">
+                                <a href="{% url 'movieDetails' movie.movieid %}" class="movietitlespan">{{movie.movie_title}}</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                    {%for movie in watchlisttv%}
+                    <div class="container99" id="container2_{{movie.movieid}}">
+                        
+                        {%with base_url="https://image.tmdb.org/t/p/original/"%}
+                            <img class="img-1" src={{base_url}}{{movie.poster_path}}>
+                        {%endwith%}
+                        <div class="info2">
+                            <div class="year-rating">
+                                <button class="watchsymbol" id="watchedtv_{{movie.movieid}}"><i class="fas fa-eye"></i></button>
+                                <input type="hidden" value="{{user.id}}" id="username_{{movie.movieid}}">
+                                <input type="hidden" id="csrf_token" value="{{ csrf_token|safe }}">
+                                
+                            </div>
+                            <div class="movietitle2">
+                                <a href="{% url 'tvdetails' movie.movieid %}" class="movietitlespan">{{movie.movie_title}}</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+            </div>
+        </div>
+        
+
+
+        <script src="static/screeninsightt/profile.js"></script>
+    </body>
+</html>
+
+
+
+
