@@ -6,6 +6,7 @@
 * **Functionality Enhancements:**
   + Advanced Search Functions: In addition to basic search capabilities, our website incorporates advanced search functions, enabling users to find movies more efficiently and effectively.
   + External API Integration: Setting us apart from other projects, our website seamlessly integrates with external APIs to retrieve comprehensive movie information. Leveraging multiple API requests on each page, our platform dynamically updates its extensive movie database with every page refresh, ensuring users have access to the latest information.
+  + In house API that allows communication between frontend and backend to save user data such as preferences, liked movies, watchlist etc...
   + Interactive Animations: Leveraging the power of JavaScript and CSS, we've infused our application with captivating animations and interactivity. These dynamic elements breathe life into the app, making it not only functional but also enjoyable and engaging for users.
 
   
